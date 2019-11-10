@@ -3,50 +3,47 @@
 % Capítulo sem numeração, mas presente no Sumário
 % ----------------------------------------------------------
 
-\chapter*[Introdução]{Introdução}
+\chapter[Introdução]{Introdução}
 \addcontentsline{toc}{chapter}{Introdução}
 
-Este documento segue as normas estabelecidas pela~\citeonline[3.1-3.2]{NBR6028:2003}.
+O número de pesquisas feitas em coautoria vêm aumentando no Brasil \cite{mena2014brazilian} e no mundo \cite{glanzel2003bibliometrics} em diferentes áreas do conhecimento, tanto entre áreas distintas quanto dentro de uma mesma área. Compreender a dinâmica dessas coautorias e medir o impacto \footnote{O termo impacto é subjetivo e, portanto, pode ter diversos significados \cite{roemer2015meaningful}. Todavia estes significados costumam englobar a ideia de um efeito com alguma intensidade \cite{roemer2015meaningful}. Neste trabalho, o termo impacto descreve interações ao longo do tempo entre as áreas do conhecimento encontradas em uma rede de coautoria.} que uma área do conhecimento pode ter em outras revolucionaria a forma que recursos para pesquisa são distribuídos.
 
-\section*{Figuras}\label{sec:figuras}
-\addcontentsline{toc}{section}{figuras}
+A partir do estudo bibliográfico de publicações científicas podem ser formadas redes de coautoria, onde os nós são pesquisadores e os vértices a coautoria entre eles. Os pesquisadores mais influentes e as áreas de conhecimento mais populares, por exemplo, podem ser obtidos a partir de métricas topológicas calculadas nessas redes \cite{franceschet2011collaboration}.
 
-As normas da~\citeonline[3.1-3.2]{NBR6028:2003} especificam que o caption da figura deve vir abaixo da mesma.
+Este estudo considera a Plataforma Lattes como fonte de dados para a formação das redes de coautoria, divididas em períodos, que serão objeto de estudo. A Plataforma armazena o currículo acadêmico de centenas de milhares de pesquisadores brasileiros, incluindo registros de atividades acadêmicas que vão desde a formação do pesquisador até suas publicações científicas mais recentes. Entende-se que esta fonte de dados, além de ser amplamente aceita e utilizada pela comunidade científica brasileira, se mantém atualizada.
 
-A Figura~\ref{fig:log} ilustra...
+As métricas topológicas dessas redes de coautoria serão calculadas e a análise do seu comportamento ao longo do tempo será feita, destacando o impacto da Ciência da Computação nas demais áreas do conhecimento.
 
-\begin{figure}[htpb]
-   \centering
-   \includegraphics[scale=.3]{figs/logo}
-   \caption{Breve explicação sobre a figura. Deve vir abaixo da mesma.}
-   \label{fig:log}
-\end{figure}
+Apesar de centrar nas áreas de conhecimento da comunidade científica brasileira, o método aplicado é geral e poderá ser reproduzido em outras comunidades científicas.
 
-\section*{Tabelas}\label{sec:tabelas}
-\addcontentsline{toc}{section}{tabelas}
+\section{Trabalhos correlatos}
+\addcontentsline{toc}{section}{Trabalhos correlatos}
 
-A Tabela~\ref{tab:tabela} apresenta os resultados...
+Alguns trabalhos têm abordado redes de coautoria para compreender como pesquisadores dentro de sua área de conhecimento \cite{mena2014brazilian} \cite{franceschet2011collaboration} \cite{santin2016collaboration}, grupos de pesquisa \cite{delgado2014analyzing} e instituições \cite{ioannidis2008measuring} interagem.
 
-\begin{table}[htpb]
-   \centering
-   \caption{Breve explicação sobre a tabela. Deve vir acima da mesma.}\label{tab:tabela}
-   \begin{tabular}{|l|c|c|c|c|c|c|r|}
-        \hline
-        \small{XX} & \small{FF} & \small{PP} & \small{YY} & \small{Yr} & \small{xY} & \small{Yx} & \small{ZZ} \\ \hline
-               615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
-               615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
-               615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
-               615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
-               615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
-   \end{tabular}
-\end{table}
+Métodos para avaliar a contribuição de pesquisadores dentro de uma rede de coautoria \cite{franceschet2011collaboration} \cite{liu2005co}, e caracterizar a interação de pesquisadores em diferentes regiões e estados brasileiros \cite{sidone2016ciencia} já foram propostos.
 
-\section*{Motivação}\label{sec:motivacao}
-\addcontentsline{toc}{section}{Motivação}
+Currículos da Plataforma Lattes foram utilizados para construir redes brasileiras de coautoria que serviram para avaliar a produtividade e caracterizar o comportamento de pesquisadores brasileiros em períodos \cite{mena2014brazilian}.
 
-\lipsum[35]
+Dentro da Ciência da Computação, foi possível notar que, no caso do mundo, pequenas listas de dois ou três autores são as mais comuns em publicações científicas, autores produtivos são os que possuem maior número de coautores, e a rede de coautoria apresenta características de redes de mundo pequeno \cite{franceschet2011collaboration}.
 
-\section*{Objetivos}\label{sec:objetivos}
-\addcontentsline{toc}{section}{Objetivos}
+A ferramenta scriptLattes \cite{mena2009scriptlattes} está preparada para analisar a produção científica de um grupo de pesquisadores cadastrados na Plataforma Lattes \cite{mena2013prospecccao} e serviu como ponto de partida para a construção das redes brasileiras de coautoria mencionadas.
 
-\lipsum[36]
+Segundo \citeonline{mena2014brazilian}, a rede brasileira de coautoria possui natureza interdisciplinar, com um número crescente de pesquisadores e publicações científicas feitas em coautoria.
+
+\section{Objetivo}
+\addcontentsline{toc}{section}{Objetivo}
+
+Caracterizar o impacto da Ciência da Computação nas demais áreas do conhecimento a partir de indicadores \footnote{Neste trabalho, indicadores são métricas de redes complexas.} em redes de coautoria inter- e intra-áreas obtidos a partir de publicações científicas registradas em currículos da Plataforma Lattes, considerando os mais de 130 \footnote{O número total de pesquisadores formados no nível de doutorado, em 2016, é de 130.140. Obtido em http://lattes.cnpq.br/web/dgp/por-titulacao, último acesso em 31 de outubro de 2017.} mil pesquisadores com nível de instrução de Doutorado.
+
+\subsection{Objetivos específicos}
+\addcontentsline{toc}{subsection}{Objetivos específicos}
+
+\begin{itemize}
+\item Desenvolver um método capaz de identificar com alto grau de acurácia a grande área de atuação de um pesquisador com base nas informações de seu currículo Lattes;
+\item Desenvolver um método capaz de identificar com alto grau de acurácia os coautores de uma publicação referenciando-os univocamente a um pesquisador contido no conjunto de pesquisadores estudado.
+\end{itemize}
+
+\subsection{Metas}
+\addcontentsline{toc}{subsection}{Metas}
+Responder quais áreas do conhecimento interagem com a Ciência da Computação, mensurar o impacto exercido entre a Ciência da Computação e as demais áreas do conhecimento, bem como o comportamento dessa medida ao longo do tempo.
