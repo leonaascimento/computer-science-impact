@@ -35,6 +35,7 @@
 % ---------------------
 \usepackage{lipsum}						% Geração de dummy text
 \usepackage{amsmath,amssymb,mathrsfs}	% Comandos matemáticos avançados 
+\usepackage{algpseudocode,algorithm}    % Para poder adicionar algoritmos
 \usepackage{setspace}  					% Para permitir espaçamento simples, 1 1/2 e duplo
 \usepackage{verbatim}					% Para poder usar o ambiente "comment"
 \usepackage{tabularx} 					% Para poder ter tabelas com colunas de largura auto-ajustável
@@ -52,6 +53,13 @@
 
 % Usar fonte serifada para títulos
 \renewcommand{\ABNTEXchapterfont}{\rmfamily}
+
+% Usar referência de algoritmo
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\makeatother
+\newcommand{\algorithmautorefname}{Algoritmo}
+\MakeRobust{\Call}
 
 % Configurações de CITAÇÕES para abntex2
 \include{extras/conf_citacoes}
@@ -121,6 +129,12 @@
 \listoftables*
 \cleardoublepage
 
+% Lista de algoritmos
+\renewcommand{\listalgorithmname}{Lista de algoritmos}
+\pdfbookmark[0]{\listalgorithmname}{loa}
+\listofalgorithms
+\cleardoublepage
+
 % Lista de abreviaturas e siglas
 \begin{siglas}
   \item[ABNT] Associação Brasileira de Normas Técnicas
@@ -152,6 +166,7 @@
 % Inclui cada capitulo da Dissertação
 \include{capitulos/introducao}
 \include{capitulos/trabalhoscorrelatos}
+\include{capitulos/conjuntodedados}
 \include{capitulos/metodo}
 \include{capitulos/cronograma}
 \include{capitulos/resultados}
