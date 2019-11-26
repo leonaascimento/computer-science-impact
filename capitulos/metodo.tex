@@ -51,6 +51,7 @@ Para amenizar este cenário foi proposto o \autoref{alg:normalizacao}, que norma
 
 \Procedure{NormalizeTitulo}{titulo}
 \State $titulo\gets \Call{DecodifiqueCaracteresEscapadosParaHtml}{titulo}$
+\State $titulo\gets \Call{ExtraiaConteudoCDATA}{titulo}$
 \State $titulo\gets \Call{RemovaMarcacaoDeHipertexto}{titulo}$
 \State $titulo\gets \Call{NormalizeParaAFormaNFKD}{titulo}$
 \State $titulo\gets \Call{RemovaDiacriticosDeCaracteresASCII}{titulo}$
@@ -65,11 +66,22 @@ Publicações homônimas são mais difíceis de ocorrer pois serão comparadas a
 
 Caso publicações homônimas não sejam identificadas corretamente será possível observar que a lista de coautores de um autor se dividirá em dois ou mais grupos altamente interconectados, mas sem colaborações entre grupos diferentes \cite{franceschet2011collaboration}. Ao detectar casos como este, poderá ser realizado tratamento manual.
 
+Nesta fase também vamos inferir qual é a área de atuação principal de cada pesquisador. A partir das áreas de atuação cadastradas pelo pesquisador no currículo Lattes, inferimos como a área principal a que tem maior ocorrência no currículo dentro da grande área de maior ocorrência. Em caso de empate, a que for listada antes no currículo será a escolhida. Para ilustrar o algoritmo posso desenhar uma árvore com dois níveis. No primeiro estão as grandes áreas e no segundo as áreas, ordenando pela ordem de ocorrência no currículo, a que ocorreu primeiro estará mais à esquerda. Aí, eu só preciso chegar até ao nó folha escolhendo o caminho de maior grau, e em caso de empate eu seleciono o nó mais a esquerda do caminho. Os nós folha com valor vazio são descartados, ou seja, as áreas de atuação que especificam apenas a grande área são ignoradas.
+
 \section{Transformação}
 
 Usando as publicações obtidas nos currículos Lattes é possível identificar dois pesquisadores como coautores se uma mesma publicação aparece em seus currículos, e com isso construir uma rede de coautoria onde os nós são pesquisadores e os vértices a coautoria entre eles. O mesmo procedimento pode ser feito por períodos (\textit{e.g.}, biênio ou triênio), onde se obtém uma série de redes de coautoria com espaçamento temporal.
 
 Para identificar as coautorias entre quaisquer dois autores foi proposto o \autoref{alg:coautoria}, que compara todas as publicações dentro de um mesmo ano usando o algoritmo de distância Levenshtein (\autoref{alg:levenshtein}).
+
+Atribuímos a área do conhecimento do pesquisador a cada uma de suas publicações. Assim, com as coautorias identificadas temos também a colaboração entre as áreas. Cada interação entre áreas em uma publicação única conta apenas uma vez, assim evita se existirem 5 pesquisadores de Ciência da Computação e 1 pesquisador de Física para construir um trabalho, eu conto apenas como 1 interação entre Ciência da Computação e Física.
+
+
+
+precisamos identificar as componentes conexas e transformá-las em cliques se já não forem uma clique. As componentes conexas são identificadas a partir da lista de adjacências obtida no \autoref{alg:coautoria}.
+
+
+
 
 \begin{algorithm}
 \caption{Identificação de coautorias}
