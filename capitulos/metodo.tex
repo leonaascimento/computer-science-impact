@@ -1,48 +1,40 @@
 \chapter[Método]{Método}
 
-O método utilizado é uma interpretação do processo proposto por \citeonline{fayyad1996data} para descoberta de conhecimento, onde o objetivo principal é transformar dados que são muito volumosos em formas mais compactas, abstratas ou úteis para se encontrar padrões e extrair informação.
+O método utilizado é uma interpretação do processo proposto por \citeonline{fayyad1996data} para descoberta de conhecimento, onde o objetivo principal é mapear um grande volume de dados para formas mais compactas, abstratas ou úteis para se encontrar padrões\footnote{O termo padrão é utilizado neste trabalho para designar um padrão encontrado nos dados.} e extrair informação.
 
-A \autoref{fig:processo} apresenta o processo no qual, a partir dos currículos de pesquisadores, são obtidos indicadores em redes de coautoria inter- e intra-áreas que possibilitam entender o impacto que uma área do conhecimento exerce em outra.
+A \autoref{fig:processo} apresenta o processo no qual, a partir de um banco de dados de currículos Lattes, são obtidos indicadores em redes de coautoria inter- e intra-áreas que são analisados para determinar o impacto que uma área do conhecimento exerce em outra.
 
 \begin{figure}[htpb]
   \centering
-  \includegraphics[scale=.3]{figuras/fayyad-diagram-graph}
-  \caption{Uma visão geral dos passos adotados para o processo de descoberta de conhecimento.}
+  \includegraphics[scale=.3]{figuras/diagrama-fayyad}
+  \caption{Uma visão geral das etapas adotadas no processo de descoberta de conhecimento.}
   \label{fig:processo}
 \end{figure}
 
-Este é um processo interativo e iterativo, que envolve múltiplos passos com decisões tomadas pelo pesquisador. Nas seções seguintes são discutidos os passos desse processo de descoberta de conhecimento.
+As etapas de seleção, pré-processamento e transformação preparam o banco de dados para a etapa de mineração de dados, onde algoritmos para extrair padrões são aplicados. Esses padrões são então interpretados e utilizados para gerar conhecimento.
 
 \section{Seleção}
 
-A partir de um conjunto de currículos de pesquisadores, foram extraídas informações sobre as áreas de atuação e publicações científicas, como livros, capítulos de livro, publicações em conferências e publicações em periódicos.
+Os currículos Lattes em formato XML foram processados por um sistema onde as áreas de atuação e produção bibliográfica do pesquisador foram extraídas e armazenadas em um banco de dados relacional.
 
-O \autoref{alg:selecao} apresenta o procedimento adotado, onde todos os atributos extraídos são marcados com um identificador para o currículo. Os tipos de publicações considerados neste trabalho são os livros publicados, capítulos de livro publicados, publicações completas em conferências e publicações completas em periódicos.
+Neste trabalho os tipos de produção bibliográfica considerados são: publicações completas em periódicos, publicações completas em conferências, capítulos de livros publicados e livros publicados, os quais são referenciados como publicações científicas.
+d
+A \autoref{fig:er} apresenta o modelo entidade-relacionamento que descreve os pesquisadores atuando em múltiplas áreas do conhecimento e escrevendo múltiplas publicações científicas.
 
-\begin{algorithm}
-\caption{Extração de atributos do currículo do pesquisador}
-\label{alg:selecao}
-\begin{algorithmic}[1]
-
-\Procedure{ExtraiaAtributos}{$id, curriculo$}
-\State $A\gets \Call{SelecioneAreasDeAtuacao}{id,curriculo}$
-\State $P_1\gets \Call{SelecioneLivrosPublicados}{id,curriculo}$
-\State $P_2\gets \Call{SelecioneCapitulosDeLivroPublicados}{id,curriculo}$
-\State $P_3\gets \Call{SelecionePublicacoesCompletasEmConferencias}{id,curriculo}$
-\State $P_4\gets \Call{SelecionePublicacoesCompletasEmPeriodicos}{id,curriculo}$
-\State \Return $(A,P_1,P_2,P_3,P_4)$
-\EndProcedure
-
-\end{algorithmic}
-\end{algorithm}
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=.5]{figuras/diagrama-er}
+  \caption{Modelo entidade-relacionamento descrevendo as relações entre o pesquisador, suas áreas de atuação e suas publicações científicas.}
+  \label{fig:er}
+\end{figure}
 
 \section{Pré-processamento}
 
 Diversas produções científicas nessa área \cite{franceschet2011collaboration} \cite{mena2013prospecccao} \cite{reuther2006managing} descrevem casos onde uma publicação têm diversos nomes (sinônimos) e casos onde diferentes publicações possuem o mesmo nome (homônimos), cujos requerem tratamento a fim de obter um resultado mais confiável na etapa seguinte.
 
-Neste trabalho, publicações sinônimas acontecem porque não foram cadastradas no currículo Lattes com exatamente a mesma informação, por exemplo, o mesmo título, haja vista que podem ocorrer abreviações de palavras, omissões de pontuação, ou erros de digitação.
+Publicações sinônimas acontecem neste trabalho porque existem diferentes títulos para uma mesma publicação que estão cadastrados no currículo Lattes dos pesquisadores envolvidos. A (colocar tabela) apresenta casos onde houve abreviação de palavras, omissão de pontuação ou erros de digitação.
 
-Para amenizar este cenário foi proposto o \autoref{alg:normalizacao}, que normaliza os títulos das publicações removendo diacríticos\footnote{Um diacrítico é um sinal gráfico que se coloca sobre, sob ou através de uma letra para alterar a sua realização fonética, isto é, o seu som, ou para marcar qualquer outra característica linguística.} e elementos como tags de marcação de hipertexto, que não pertencem ao título e foram identificadas no decorrer deste trabalho.
+ComoPara este cenário foi proposto o \autoref{alg:normalizacao}, que normaliza os títulos das publicações removendo diacríticos\footnote{Um diacrítico é um sinal gráfico que se coloca sobre, sob ou através de uma letra para alterar a sua realização fonética, isto é, o seu som, ou para marcar qualquer outra característica linguística.} e elementos que não pertencem ao título identificados no decorrer deste trabalho, como tags de marcação de hipertexto e caracteres com codificação HTML.
 
 \begin{algorithm}
 \caption{Normalização do título de publicações}
@@ -50,8 +42,8 @@ Para amenizar este cenário foi proposto o \autoref{alg:normalizacao}, que norma
 \begin{algorithmic}[1]
 
 \Procedure{NormalizeTitulo}{titulo}
-\State $titulo\gets \Call{DecodifiqueCaracteresEscapadosParaHtml}{titulo}$
-\State $titulo\gets \Call{ExtraiaConteudoCDATA}{titulo}$
+\State $titulo\gets \Call{DecodifiqueCaracteresHtml}{titulo}$
+\State $titulo\gets \Call{ExtraiaConteudoDaTagCDATA}{titulo}$
 \State $titulo\gets \Call{RemovaMarcacaoDeHipertexto}{titulo}$
 \State $titulo\gets \Call{NormalizeParaAFormaNFKD}{titulo}$
 \State $titulo\gets \Call{RemovaDiacriticosDeCaracteresASCII}{titulo}$
@@ -66,8 +58,6 @@ Publicações homônimas são mais difíceis de ocorrer pois serão comparadas a
 
 Caso publicações homônimas não sejam identificadas corretamente será possível observar que a lista de coautores de um autor se dividirá em dois ou mais grupos altamente interconectados, mas sem colaborações entre grupos diferentes \cite{franceschet2011collaboration}. Ao detectar casos como este, poderá ser realizado tratamento manual.
 
-Nesta fase também vamos inferir qual é a área de atuação principal de cada pesquisador. A partir das áreas de atuação cadastradas pelo pesquisador no currículo Lattes, inferimos como a área principal a que tem maior ocorrência no currículo dentro da grande área de maior ocorrência. Em caso de empate, a que for listada antes no currículo será a escolhida. Para ilustrar o algoritmo posso desenhar uma árvore com dois níveis. No primeiro estão as grandes áreas e no segundo as áreas, ordenando pela ordem de ocorrência no currículo, a que ocorreu primeiro estará mais à esquerda. Aí, eu só preciso chegar até ao nó folha escolhendo o caminho de maior grau, e em caso de empate eu seleciono o nó mais a esquerda do caminho. Os nós folha com valor vazio são descartados, ou seja, as áreas de atuação que especificam apenas a grande área são ignoradas.
-
 \section{Transformação}
 
 Usando as publicações obtidas nos currículos Lattes é possível identificar dois pesquisadores como coautores se uma mesma publicação aparece em seus currículos, e com isso construir uma rede de coautoria onde os nós são pesquisadores e os vértices a coautoria entre eles. O mesmo procedimento pode ser feito por períodos (\textit{e.g.}, biênio ou triênio), onde se obtém uma série de redes de coautoria com espaçamento temporal.
@@ -79,9 +69,6 @@ Atribuímos a área do conhecimento do pesquisador a cada uma de suas publicaç�
 
 
 precisamos identificar as componentes conexas e transformá-las em cliques se já não forem uma clique. As componentes conexas são identificadas a partir da lista de adjacências obtida no \autoref{alg:coautoria}.
-
-
-
 
 \begin{algorithm}
 \caption{Identificação de coautorias}
@@ -126,6 +113,8 @@ precisamos identificar as componentes conexas e transformá-las em cliques se j�
 
 \end{algorithmic}
 \end{algorithm}
+
+Nesta fase também vamos inferir qual é a área de atuação principal de cada pesquisador. A partir das áreas de atuação cadastradas pelo pesquisador no currículo Lattes, inferimos como a área principal a que tem maior ocorrência no currículo dentro da grande área de maior ocorrência. Em caso de empate, a que for listada antes no currículo será a escolhida. Para ilustrar o algoritmo posso desenhar uma árvore com dois níveis. No primeiro estão as grandes áreas e no segundo as áreas, ordenando pela ordem de ocorrência no currículo, a que ocorreu primeiro estará mais à esquerda. Aí, eu só preciso chegar até ao nó folha escolhendo o caminho de maior grau, e em caso de empate eu seleciono o nó mais a esquerda do caminho. Os nós folha com valor vazio são descartados, ou seja, as áreas de atuação que especificam apenas a grande área são ignoradas.
 
 \section{Mineração de dados}
 

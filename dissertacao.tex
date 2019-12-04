@@ -1,7 +1,7 @@
 \documentclass[
 	% -- opções da classe memoir --
 	12pt,                   % tamanho da fonte
-	openright,              % capítulos começam em pág ímpar (insere página vazia caso preciso)
+	openany,                % capítulos começam em sequência
 	twoside,                % para impressão em verso e anverso. Oposto a oneside
 	a4paper,                % tamanho do papel. 
 	% -- opções da classe abntex2 --
@@ -106,7 +106,7 @@
 \include{pretextual/catalografica}
 
 % Inserir Folha de Aprovação
-\include{pretextual/assinaturas}
+% \include{pretextual/assinaturas}
 
 % Dedicatória
 \include{pretextual/dedicatoria}
@@ -169,9 +169,10 @@
 \include{capitulos/trabalhoscorrelatos}
 \include{capitulos/conjuntodedados}
 \include{capitulos/metodo}
-\include{capitulos/cronograma}
 \include{capitulos/resultados}
 \include{capitulos/conclusao}
+\include{capitulos/limitacoes}
+\include{capitulos/trabalhosfuturos}
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS (Referências, Glossário, Apêndices)
@@ -188,7 +189,7 @@
 \include{postextual/apendices}
 
 % Anexos
-\include{postextual/anexos}
+% \include{postextual/anexos}
 
 % Índice remissivo (Consultar manual)
 %\phantompart
