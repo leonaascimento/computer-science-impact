@@ -28,6 +28,7 @@
 \usepackage{graphicx,graphicx}  % Inclusão de gráficos
 \usepackage{epsfig,subfig}      % Inclusão de figuras
 \usepackage{microtype}          % Melhorias de justificação
+\usepackage{csvsimple}          % Importar arquivos csv como tabelas
 % ---------------------
 		
 % ---------------------
@@ -83,6 +84,7 @@
 \makeindex
 % ---------------------
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  INICIO DO DOCUMENTO  %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -103,10 +105,10 @@
 \imprimirfolhaderosto*
 
 % Imprimir Ficha Catalografica
-\include{pretextual/catalografica}
+% \include{pretextual/catalografica}
 
 % Inserir Folha de Aprovação
-% \include{pretextual/assinaturas}
+\include{pretextual/assinaturas}
 
 % Dedicatória
 \include{pretextual/dedicatoria}
@@ -137,18 +139,18 @@
 \cleardoublepage
 
 % Lista de abreviaturas e siglas
-\begin{siglas}
-  \item[ABNT] Associação Brasileira de Normas Técnicas
-  \item[abnTeX] Normas para TeX
-\end{siglas}
+% \begin{siglas}
+%   \item[ABNT] Associação Brasileira de Normas Técnicas
+%   \item[abnTeX] Normas para TeX
+% \end{siglas}
 
 % Lista de símbolos
-\begin{simbolos}
-  \item[$ \Gamma $] Letra grega Gama
-  \item[$ \Lambda $] Lambda
-  \item[$ \zeta $] Letra grega minúscula zeta
-  \item[$ \in $] Pertence
-\end{simbolos}
+% \begin{simbolos}
+%   \item[$ \Gamma $] Letra grega Gama
+%   \item[$ \Lambda $] Lambda
+%   \item[$ \zeta $] Letra grega minúscula zeta
+%   \item[$ \in $] Pertence
+% \end{simbolos}
 
 % Inserir o SUMÁRIO
 \pdfbookmark[0]{\contentsname}{toc}
@@ -166,13 +168,14 @@
 
 % Inclui cada capitulo da Dissertação
 \include{capitulos/introducao}
+\include{capitulos/conceitos}
 \include{capitulos/trabalhoscorrelatos}
 \include{capitulos/conjuntodedados}
 \include{capitulos/metodo}
 \include{capitulos/resultados}
 \include{capitulos/conclusao}
-\include{capitulos/limitacoes}
-\include{capitulos/trabalhosfuturos}
+% \include{capitulos/limitacoes}
+% \include{capitulos/trabalhosfuturos}
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS (Referências, Glossário, Apêndices)

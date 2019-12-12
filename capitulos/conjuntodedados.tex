@@ -1,23 +1,67 @@
 \chapter{Conjunto de dados}
 
-\section{Redes bibliométricas de larga escala}
+Os currículos Lattes estão disponíveis online em formato PDF, HTML e XML. Entretanto, a coleta em lotes só é possível para projetos específicos, após obterem a permissão apropriada \cite{medeiros2013dynamics}.
 
-\section{Plataforma Lattes}
+Apesar disso, a coleta dos currículos pode ser feita com o uso de ferramentas que exploram cada currículo individualmente. O problema está no fato que o custo computacional para obter os milhões de currículos disponíveis na plataforma um a um é bastante alto. Por esse motivo, o escopo foi limitado a todos os pesquisadores com nível de formação acadêmica igual ou acima de doutorado.
 
-\section{Coleta de dados}
+O Grupo de Pesquisa em Cientometria do CMCC/UFABC realizou em janeiro de 2019 a coleta dos currículos no formato XML que são considerados neste trabalho. Nas seções seguintes são apresentadas informações relativas a esse conjunto de dados.
 
 \section{Análise dos metadados}
 
+Foram obtidos 315.155 currículos, dos quais 29 estavam corrompidos e 723 apresentavam um aviso de erro no conteúdo do arquivo, resultando em 314.403 currículos para serem avaliados. Para se ter uma ideia do volume de dados, são cerca de 113 gigabytes, contendo mais de X bilhões de elementos XML e aproximadamente Y bilhões de atributos XML.
+
+Sabendo que os dados não têm preenchimento obrigatório, foi realizado um estudo para conhecer como cada um dos campos estava populado no conjunto de dados. Isso permitiria entender a viabilidade de se considerar uma característica do currículo do pesquisador.
+
+Informações sobre área de atuação e produção bibliográfica aparecem em quase todos os currículos. Estão presentes em X\% e Y\% dos casos, respectivamente. A \autoref{tab:producaobibliografica} apresenta os tipos de produção bibliográfica pelo número de vezes que estas aparecem em currículos distintos.
+
+\begin{table}[htpb]
+    \centering
+    \caption{Número de ocorrências de cada tipo de produção bibliográfica em currículos distintos.}
+    \label{tab:producaobibliografica}
+    \begin{tabular}{|r|l|c|}%
+        \hline & Tipo de produção bibliográfica & Ocorrências\\\hline
+        \csvreader[late after line=\\\hline]%
+        {"tabelas/producao-bibliografica.csv"}%
+        {no=\no,contagem=\contagem}%
+        {\thecsvrow & \no & \contagem}%
+    \end{tabular}
+\end{table}
+
+É interessante notar que, apesar de ser comum que os pesquisadores apresentem seus trabalhos sendo desenvolvidos em eventos, a fim de obter opiniões do público, os artigos publicados estão presentes em um número maior de currículos. Uma justificativa plausível para esse fato é que nem todos os pesquisadores preenchem essa informação.
+
+A produção técnica, assim como a produção bibliográfica, também está presente em grande parte dos currículos, são ao todo X currículos com essa informação. Portanto, existe potencial para a exploração desses dados, o que ajudaria a compreender a maneira que a ciência e tecnologia se relacionam no Brasil.
+
+As ocorrências de cada nível de formação acadêmica em currículos distintos apresentada na \autoref{tab:formacaoacademica} sugere que boa parte dos pesquisadores costuma registrar toda sua trajetória acadêmica, possibilitando a exploração de métricas de produtividade no período de cada um desses níveis.
+
+\begin{table}[htpb]
+    \centering
+    \caption{Número de ocorrências de cada nível de formação acadêmica em currículos distintos.}
+    \label{tab:formacaoacademica}
+    \begin{tabular}{|r|l|c|}%
+        \hline & Nível de formação acadêmica & Ocorrências\\\hline
+        \csvreader[late after line=\\\hline]%
+        {"tabelas/formacao-academica.csv"}%
+        {no=\no,contagem=\contagem}%
+        {\thecsvrow & \no & \contagem}%
+    \end{tabular}
+\end{table}
+
+Dentre outras características, seria interessante avaliar a trajetória profissional dos pesquisadores e verificar como eles estão inseridos no mercado brasileiro. Os dados de atuação profissional aparecem em boa parte dos currículos.
+
+Um subproduto  no formato XSD descrevendo formalmente a estrutura do currículo Lattes foi construída a partir . Vale salientar que o único documento\footnote{A especificação no formato DTD do currículo Lattes está disponível em \url{http://lattes.cnpq.br/web/plataforma-lattes/extracao-de-dados/}.} oficial que auxilia na extração de dados do currículo Lattes é uma especificação anterior a 2009. O diagrama com a estrutura do currículo apresentado no \autoref{ap:diagramalattes} é um subproduto desse estudo.
+
+Inicialmente foi considerada a construção de um banco de dados que abrangesse todas as informações relevantes do currículo. Assim, uma vez que as coautorias estivessem identificadas, seria possível explorar métricas considerando não só as áreas de atuação do pesquisador, mas também outras características, como o histórico de formação acadêmica, linha de pesquisa, atuação profissional, produção técnica, dentre outras.
+
+Contudo, não foram encontrados meios que suprissem as necessidades técnicas impostas por um banco de dados desta magnitude. No início foi utilizado um servidor privado de um professor da Universidade Federal de Mato Grosso do Sul (UFMS), mas a colaboração foi terminada após alguns meses. Depois disso, dois grandes provedores de nuvem foram contatados, mas ambos não disponibilizavam os recursos necessários em seus planos dedicados a estudantes.
+
 \section{Características do conjunto de dados}
 
-Para caracterizar precisamente o impacto que a Ciência da Computação exerce nas demais áreas do conhecimento, é necessária uma rede que proporcione uma representação de toda a ciência, isto é, uma rede global. Redes desse tipo são mais robustas em altos níveis de granularidade \cite{boyack2019creation}, pois os mesmos resultados tendem a ser encontrados independentemente do método aplicado.
+Dos 314.403 currículos avaliados, foram extraídas mais de 17 milhões de publicações científicas. Porém, nem todas foram consideradas. Uma vez que o custo computacional do método é bastante caro, decidiu-se condicionar a análise ao subconjunto de publicações que tem maior valor para a ciência, que são os livros e capítulos de livros que foram publicados e as publicações em conferência e periódicos completas.
 
-Existem muitos bancos de dados que podem ser usados para se construir uma rede global. Os mundialmente mais usados em estudos de bibliometria e cientometria são o Scopus e Web of Science (WoS). Segundo \citeonline{boyack2019creation}, a dominância desses bancos de dados se deve ao fato de cobrirem grande parte das áreas de conhecimento e incluir as referências citadas, facilitando a criação de redes de citações.
+Isso reduz o número total de publicações avaliadas para aproximadamente 10 milhões de publicações.
 
-No cenário brasileiro, a Plataforma Lattes é uma fonte de dados interessante por armazenar os currículos de diversos pesquisadores e ter se tornado um padrão nacional para a avaliação de atividades acadêmicas e profissionais, onde a maioria dos pesquisadores de todas as áreas do conhecimento estão registrados \cite{mena2014brazilian}.
+O número de autores, isto é, pesquisadores que escreveram publicações científicas, é de X, de um total de Y. A maioria dos pesquisadores possui entre X e Y publicações cadastradas.
 
-Assim, contando com mais de um milhão de currículos de pesquisadores que incluem desde sua formação acadêmica até as publicações científicas mais recentes, passando por suas áreas de atuação e premiações, a Plataforma Lattes se mostra um banco de dados adequado para o estudo.
+As áreas com o maior número de publicações científicas são, com destaque para a área de ... que figura entre os primeiros em todas as categorias.
 
-Como o custo computacional para processar milhões de currículos e dezenas de milhões de publicações científicas seria bastante alto, decidiu-se trabalhar apenas com os currículos de pesquisadores com nível de formação acadêmica acima de doutorado.
-
-Este conjunto de currículos foi cedido pelo Grupo de Pesquisa em Cientometria do CMCC/UFABC no formato XML, que realizou a coleta dos currículos em janeiro de 2019.
+O ano é preenchido é um campo preenchido por quase todas, são X os casos onde o ano não está presente, representando apenas Y porcento dos casos. É importante salientar que o ano é fundamental para o método proposto, e todos esses casos são desconsiderados da rede de coautoria.

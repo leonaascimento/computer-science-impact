@@ -6,7 +6,7 @@ A \autoref{fig:processo} apresenta o processo no qual, a partir de um banco de d
 
 \begin{figure}[htpb]
   \centering
-  \includegraphics[scale=.3]{figuras/diagrama-fayyad}
+  \includegraphics[width=1\textwidth]{figuras/diagrama-fayyad}
   \caption{Uma visão geral das etapas adotadas no processo de descoberta de conhecimento.}
   \label{fig:processo}
 \end{figure}
@@ -18,7 +18,7 @@ As etapas de seleção, pré-processamento e transformação preparam o banco de
 Os currículos Lattes em formato XML foram processados por um sistema onde as áreas de atuação e produção bibliográfica do pesquisador foram extraídas e armazenadas em um banco de dados relacional.
 
 Neste trabalho os tipos de produção bibliográfica considerados são: publicações completas em periódicos, publicações completas em conferências, capítulos de livros publicados e livros publicados, os quais são referenciados como publicações científicas.
-d
+
 A \autoref{fig:er} apresenta o modelo entidade-relacionamento que descreve os pesquisadores atuando em múltiplas áreas do conhecimento e escrevendo múltiplas publicações científicas.
 
 \begin{figure}[htpb]
@@ -27,6 +27,8 @@ A \autoref{fig:er} apresenta o modelo entidade-relacionamento que descreve os pe
   \caption{Modelo entidade-relacionamento descrevendo as relações entre o pesquisador, suas áreas de atuação e suas publicações científicas.}
   \label{fig:er}
 \end{figure}
+
+Foi construído um programa para a extração dos currículos usando a linguagem C\# devido à sua capacidade para lidar com arquivos XML de forma performática e bibliotecas de paralelismo de dados, que auxiliaram na transformação dos arquivos XML em arquivos JSON para tratamento na nuvem.
 
 \section{Pré-processamento}
 
@@ -37,21 +39,19 @@ Publicações sinônimas acontecem neste trabalho porque existem diferentes tít
 ComoPara este cenário foi proposto o \autoref{alg:normalizacao}, que normaliza os títulos das publicações removendo diacríticos\footnote{Um diacrítico é um sinal gráfico que se coloca sobre, sob ou através de uma letra para alterar a sua realização fonética, isto é, o seu som, ou para marcar qualquer outra característica linguística.} e elementos que não pertencem ao título identificados no decorrer deste trabalho, como tags de marcação de hipertexto e caracteres com codificação HTML.
 
 \begin{algorithm}
-\caption{Normalização do título de publicações}
-\label{alg:normalizacao}
-\begin{algorithmic}[1]
-
-\Procedure{NormalizeTitulo}{titulo}
-\State $titulo\gets \Call{DecodifiqueCaracteresHtml}{titulo}$
-\State $titulo\gets \Call{ExtraiaConteudoDaTagCDATA}{titulo}$
-\State $titulo\gets \Call{RemovaMarcacaoDeHipertexto}{titulo}$
-\State $titulo\gets \Call{NormalizeParaAFormaNFKD}{titulo}$
-\State $titulo\gets \Call{RemovaDiacriticosDeCaracteresASCII}{titulo}$
-\State $titulo\gets \Call{NormalizeParaAFormaNFC}{titulo}$
-\State \Return $titulo$
-\EndProcedure
-
-\end{algorithmic}
+  \caption{Normalização do título de publicações}
+  \label{alg:normalizacao}
+  \begin{algorithmic}[1]
+  \Procedure{NormalizeTitulo}{titulo}
+    \State $titulo\gets \Call{DecodifiqueCaracteresHtml}{titulo}$
+    \State $titulo\gets \Call{ExtraiaConteudoDaTagCDATA}{titulo}$
+    \State $titulo\gets \Call{RemovaMarcacaoDeHipertexto}{titulo}$
+    \State $titulo\gets \Call{NormalizeParaAFormaNFKD}{titulo}$
+    \State $titulo\gets \Call{RemovaDiacriticosDeCaracteresASCII}{titulo}$
+    \State $titulo\gets \Call{NormalizeParaAFormaNFC}{titulo}$
+    \State \Return $titulo$
+  \EndProcedure
+  \end{algorithmic}
 \end{algorithm}
 
 Publicações homônimas são mais difíceis de ocorrer pois serão comparadas apenas publicações de um mesmo tipo referentes a um mesmo ano. Ainda, para haver o casamento entre publicações, é necessário que os títulos tenham pelo menos 3 palavras, para evitar que editoriais, por exemplo, sejam considerados uma coautoria.
@@ -71,46 +71,41 @@ Atribuímos a área do conhecimento do pesquisador a cada uma de suas publicaç�
 precisamos identificar as componentes conexas e transformá-las em cliques se já não forem uma clique. As componentes conexas são identificadas a partir da lista de adjacências obtida no \autoref{alg:coautoria}.
 
 \begin{algorithm}
-\caption{Identificação de coautorias}
-\label{alg:coautoria}
-\begin{algorithmic}[1]
-
-\Procedure{IdentificaCoautoria}{P}
-\State $P^2\gets P\times{P}$
-\State $C\gets \emptyset$
-\ForAll{$(p_1, p_2) \in P^2$}
-\If{publicações já foram comparadas}
-\State \textbf{continue}
-\ElsIf{publicações de anos diferentes}
-\State \textbf{continue}
-\ElsIf{publicações do mesmo pesquisador}
-\State \textbf{continue}
-\ElsIf{títulos compostos por duas palavras ou menos}
-\State \textbf{continue}
-\ElsIf{títulos com diferença superior a 85\% no tamanho}
-\State \textbf{continue}
-\ElsIf{\Call{Levenshthen}{\Call{Titulo}{$p_1$},\Call{Titulo}{$p_2$}} $<$ 0.85}
-\State \textbf{continue}
-\Else
-\State $C\gets C\cup\{(p1, p2)\}$
-\EndIf
-\EndFor
-
-\State \Return $C$
-\EndProcedure
-
-\end{algorithmic}
+  \caption{Identificação de coautorias}
+  \label{alg:coautoria}
+  \begin{algorithmic}[1]
+  \Procedure{IdentificaCoautoria}{P}
+    \State $P^2\gets P\times{P}$
+    \State $C\gets \emptyset$
+    \ForAll{$(p_1, p_2) \in P^2$}
+    \If{publicações já foram comparadas}
+      \State \textbf{continue}
+    \ElsIf{publicações de anos diferentes}
+      \State \textbf{continue}
+    \ElsIf{publicações do mesmo pesquisador}
+      \State \textbf{continue}
+    \ElsIf{títulos compostos por duas palavras ou menos}
+      \State \textbf{continue}
+    \ElsIf{títulos com diferença superior a 85\% no tamanho}
+      \State \textbf{continue}
+    \ElsIf{\Call{Levenshthen}{\Call{Titulo}{$p_1$},\Call{Titulo}{$p_2$}} $<$ 0.85}
+      \State \textbf{continue}
+    \Else
+      \State $C\gets C\cup\{(p1, p2)\}$
+    \EndIf
+    \EndFor
+    \State \Return $C$
+  \EndProcedure
+  \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}
 \caption{Identificação de coautorias}
 \label{alg:levenshtein}
 \begin{algorithmic}[1]
-
 \Procedure{Levenshtein}{s}
 \State \Return $i$
 \EndProcedure
-
 \end{algorithmic}
 \end{algorithm}
 
@@ -122,10 +117,15 @@ Nesta etapa serão feitos os cálculos de indicadores das redes de coautoria, on
 
 Pretendemos ainda, explorar novos arcabouços computacionais para processar todos os dados coletados.
 
+Foi construído um mapa de calor para identificar quais são as áreas com mais colaboração dentro de cada área. A normalização pela área é uma métrica que normaliza...
+
 \section{Identificação de padrões e avaliação}
+
+Análise condicional porque consideramos apenas os que têm área de atuação e ano da publicação preenchidos.
 
 Será determinada a existência de alguma correlação entre os indicadores obtidos e a análise desses indicadores para determinar se existe influência (ou impacto relativo) da Ciência da Computação em outras áreas.
 
 Complementarmente, acontecimentos históricos que possam justificar o padrão encontrado serão buscados a fim de contextualizar a avaliação.
 
 Diferentes conceitos de aprendizado de máquina e reconhecimento estatístico de padrões serão abordados.
+
