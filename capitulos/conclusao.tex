@@ -1,29 +1,27 @@
 \chapter{Considerações finais}
 
-A ciência da computação é uma área que se conecta a quase todas as áreas do conhecimento que apareceram em nossa listagem, porém não exerce impacto significativo em suas produções bibliográficas. Isso contradiz a sensação de que a computação está envolvida em tudo nos dias de hoje.
+Foram construídas as redes de coautoria dos pesquisadores com nível igual ou acima de doutorado cadastrados na Plataforma Lattes. O objetivo era caracterizar o impacto que a Ciência da Computação exerce nas demais áreas do conhecimento para responder quais são as áreas que mais interagem com a Ciência da Computação e sua influência sobre elas.
 
-Poderíamos dizer que os produtos da ciência da computação são bastante usados em nosso dia a dia e com certeza também nas pesquisas de outras áreas, porém profissionais da área não são requisitados para os estudos. Sendo assim, poderíamos apenas dizer que talvez os produtos da ciência da computação permeiem tudo e tenham impacto na pesquisa, mas não podemos dizer que a pesquisa realizada no brasil envolve pesquisadores da área.
+Os resultados obtidos apontam que a Ciência da Computação é uma das 5 áreas que mais produzem publicações científicas em coautoria e que esse número vem crescendo consistentemente. Com relação à participação em grupos interdisciplinares para a produção de publicações científicas, a Ciência da Computação não está posicionada entre as primeiras e fica bem atrás de áreas como Medicina, Bioquímica, Química, Genética e Agronomia.
 
-Análises de caso de pesquisas que aconteceram poderiam ser feitas para entender qual o papel exercido pela ciência da computação nessas outras áreas e entender se é apenas o volume que é baixo.
+Apesar de ser uma área que se conecta a quase todas as áreas do conhecimento, as coautorias realizadas por cientistas da computação não exercem impacto significativo na produção das publicações científicas de outras áreas. Assim, mesmo observando que a computação vem sendo cada vez mais explorada, isso não se traduz em um pesquisador da área participando do processo, o que abre espaço para novas discussões e sugere que pesquisadores de outras áreas estão se capacitando para o uso da computação como ferramenta.
 
 \section{Limitações}
 
-A base de dados é um retrato do mês de janeiro de 2019, e não ter os dados atualizados de forma mais ágil é um fator que dificulta a descoberta do conhecimento, acompanhando a mudança que acontece dia após dia.
+A base de dados é um retrato de janeiro de 2019 e, como a obtenção dos currículos é demorada, não é possível que o processo de descoberta do conhecimento considere sempre a versão mais atualizada dos dados. Como a identificação das coautorias dura aproximadamente 12 dias em uma máquina com dois núcleos de processamento, mesmo que um novo retrato da base de dados pudesse ser obtido a cada hora, não seria possível trabalhar com a versão mais recente do conjunto de dados.
 
-Ainda, o processamento durou cerca de duas 1 semana e meia, o que significa dizer que se um novo retrato fosse feito hoje não conseguiríamos disponibilizar em tempo hábil.
+O tempo de processamento é alto porque o algoritmo usado para a identificação das coautorias, mesmo com as otimizações, continua sendo $O(n^2)$ para uma lista de publicações de tamanho $n$. Ou seja, o tempo de execução aumenta quadraticamente em relação ao tamanho da entrada.
 
-O algoritmo usado para comparação dos título é $O(n^2)$ o que significa dizer que ele é quadrático em relação ao número de entrada. Os filtros aplicados de ano e similaridade por diferença de tamanho da string ajudam a diminuir o tempo de execução, mas não é suficiente.
-
-Nem todos os pesquisadores preenchem suas áreas e isso faz com que tenhamos que desconsiderar boa parte dos dados. Assim, temos dados desconhecidos que não sabemos inferir sua área de atuação. Apesar de termos informações sobre a formação do pesquisador, não extraímos esse dado do currículo e portanto não conseguimos usá-lo.
-
-As análises estão pouco aprofundadas porque muito tempo foi investido no processamento dos dados e outras estratégias que foram aplicadas no passado fizeram o tempo ser mal investido. Houveram problemas com servidores. Mudança de ferramentas, gastos com computação em nuvem para auxiliar no processamento.
+As análises feitas abordam o retrato atual das coautorias, mas não são capazes de informar se existiram mudanças nas relações de coautoria entre as áreas e como esse comportamento se deu ao longo dos anos. Ainda, nem todos os pesquisadores preenchem suas áreas e isso faz com que tenhamos que desconsiderar parte dos dados. Inclusive existem coautorias que foram desconsideradas devido a esse tipo de dado faltante.
 
 \section{Trabalhos futuros}
 
-Existem muitas análises que podem ser derivadas do banco de dados construído, uma vez que ele dá o panorama geral das coautorias de todos os pesquisadores com nível de instrução de doutorado na plataforma lattes. Com os dados já presentes no banco de dados é possível entender como funcionam as coautorias entre as universidades, possibilitando entender qual é o nível de interação entre elas. Também é possível entender como anda a produção de materiais de divulgação científica, dado que esse indicador também foi coletado.
+Existem muitas análises que podem ser derivadas das redes de coautoria construídas, uma vez que elas dão o panorama geral das coautorias de todos os pesquisadores com nível de instrução igual ou acima de doutorado, os quais são os mais relevantes na produção científica brasileira.
 
-Também poderiam ser considerados estudos sobre a rede de coautoria, explorando suas propriedades, identificando os pesquisadores mais produtivos e mais influentes na comunidade científica brasileira. Foi observado por ena-chalco que os autores mais produtivos são os que mais colaboram, e um estudo dos assuntos abordados nessas colaborações também poderia ser feito aplicando técnicas de processamento de linguagem natural no título das publicações.
+Os dados presentes no Currículo Lattes permitem entender como funcionam as coautorias entre pesquisadores de universidades e empresas, de diferentes regiões do país e do mundo, além do impacto que falar uma língua estrangeira pode ter no aumento das coautorias
 
-Pode ser construída uma ferramenta capaz de desambiguar autores. É um problema identificar todos os coautores de uma publicação em citações, pois muitas delas apresentam apenas o nome do primeiro pesquisador com o et. al.. A partir apenas do título da publicação e o ano poderíamos fornecer a lista completa de pelo menos os pesquisadores presentes na plataforma lattes.
+Também poderiam ser exploradas propriedades dessas redes, como a identificação de pesquisadores produtivos e influentes, além de observar a hipótese de que os autores mais produtivos são os que mais colaboram.
 
-Poderíamos explorar a produção por nível acadêmico e entender como grandes pesquisadores trabalharam em coautoria, o que poderia indicar que a evolução da ciência se dá por essas relações.
+Momentos históricos do país poderiam ser avaliados contra o volume de publicações feitas em coautoria. A \autoref{fig:coautoriaanual} apresenta de 2012 para 2013 uma desaceleração no crescimento de publicações feitas em coautoria, o que coincide com a greve das universidades federais. Seria relevante descobrir se manifestações sociais e políticas, assim como surtos de doenças, influenciam as relações da ciência.
+
+Ainda, poderia ser construída uma ferramenta para desambiguação autores, dado que é um identificar todos os coautores de uma publicação em citações é problema. Esse problema é ainda pior quando apenas o nome de um dos pesquisadores é colocado nas citações.

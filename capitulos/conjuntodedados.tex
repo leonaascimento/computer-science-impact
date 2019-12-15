@@ -27,7 +27,7 @@ Informações sobre as áreas de atuação e produção bibliográfica estão pr
     \end{tabular}
 \end{table}
 
-Avaliando como os níveis de formação acadêmica estão cadastrados nos currículos, foi possível observar que muitos preenchem dados sobre a graduação e mestrado, como apresenta a \autoref{tab:formacaoacademica}, sendo que bastaria cadastrar o doutorado ou nível acima, o que sugere que todo o histórico de formação acadêmica é preenchido pelos pesquisadores.
+Avaliando como os níveis de formação acadêmica estão cadastrados nos currículos, foi possível observar que muitos pesquisadores preenchem dados sobre a graduação e o mestrado, como apresenta a \autoref{tab:formacaoacademica}. Uma vez que bastaria cadastrar o doutorado ou nível acima, isso sugere que todo o histórico de formação acadêmica acaba sendo preenchido.
 
 \begin{table}[htpb]
     \centering
@@ -42,18 +42,17 @@ Avaliando como os níveis de formação acadêmica estão cadastrados nos currí
     \end{tabular}
 \end{table}
 
-A partir desse estudo, também foi possível construir os diagramas apresentados no \autoref{ap:diagramacurriculo}, que ajudam a entender a estrutura do currículo, e uma especificação formal do currículo no formato XSD\footnote{O XML Schema Definition (XSD) é uma especificação que descreve os elementos e atributos que um determinado arquivo XML pode conter.}, a qual pode ser usada para a definição da estrutura do banco de dados. Vale observar a especificação oficial dos currículos\footnote{A especificação oficial do currículo Lattes no formato DTD está disponível em \url{http://lattes.cnpq.br/web/plataforma-lattes/extracao-de-dados}.} está no formato DTD, um padrão que vem sendo substituído desde 2009 e costuma não ser suportado por ferramentas e bibliotecas de interpretação de arquivos XML mais recentes.
+A partir desse estudo, também foi possível construir os diagramas apresentados no \autoref{ap:diagramacurriculo}, que ajudam a entender a estrutura do currículo, e uma especificação formal do currículo no formato XSD\footnote{O XML Schema Definition (XSD) é uma especificação que descreve os elementos e atributos que um determinado arquivo XML pode conter.}, a qual pode ser usada para a definição da estrutura do banco de dados. Vale observar que a especificação oficial dos currículos\footnote{A especificação oficial do currículo Lattes no formato DTD está disponível em \url{http://lattes.cnpq.br/web/plataforma-lattes/extracao-de-dados}.} está no formato DTD, um padrão que vem sendo substituído desde 2009 e costuma não ser suportado por ferramentas e bibliotecas de interpretação de arquivos XML mais recentes.
 
 Com isso, foi considerado a construção de um banco de dados que abrangesse todas as informações relevantes do currículo. Assim, uma vez que as coautorias estivessem identificadas, seria possível explorar métricas considerando não só as áreas de atuação do pesquisador, mas também outras características, como o histórico de formação acadêmica, linha de pesquisa, atuação profissional, produção técnica, dentre outras.
 
-Contudo, não foram encontrados meios que suprissem as necessidades técnicas impostas por um banco de dados desta magnitude\footnote{
-Devido ao volume de dados e tempo necessário, não seria possível realizar o processamento em um computador pessoal. Assim, no início, um servidor privado de um professor da Universidade Federal de Mato Grosso do Sul (UFMS) foi utilizado, mas a colaboração foi terminada após alguns meses. Depois disso, dois grandes provedores de nuvem foram contatados, mas ambos não ofereciam os recursos necessários em seus planos dedicados a estudantes.}. Assim, para viabilizar a construção das redes de coautoria e colaboração entre as áreas, o conjunto de dados ficou limitado às áreas de atuação do pesquisador e aos tipos de produção bibliográfica com maior número de ocorrências: publicações em periódicos, publicações em eventos, livros e capítulos de livro.
+Contudo, não foram encontrados meios\footnote{Devido ao volume de dados e tempo necessário, não seria possível realizar o processamento em um computador pessoal. Assim, no início, um servidor privado de um professor da Universidade Federal de Mato Grosso do Sul (UFMS) foi utilizado, mas a colaboração foi terminada após alguns meses. Depois disso, dois grandes provedores de nuvem foram contatados, mas ambos não ofereciam os recursos necessários em seus planos dedicados a estudantes.} que suprissem as necessidades técnicas impostas por um banco de dados desta magnitude. Assim, para viabilizar a construção das redes de coautoria e colaboração entre as áreas, o conjunto de dados ficou limitado às áreas de atuação do pesquisador e aos tipos de produção bibliográfica com maior número de ocorrências: publicações em periódicos, publicações em eventos, livros e capítulos de livro.
 
 \section{Características do conjunto de dados}
 
-Os currículos contemplam publicações em periódicos e publicações em evento que podem ter diferentes naturezas: resumo, resumo expandido, publicação completa ou não especificado. Ainda, apesar dos capítulos de livro serem sempre de livros publicados, os livros podem tanto se referir aos publicados quanto aos organizados.
+Os currículos contemplam publicações em periódicos e publicações em evento que podem ter diferentes naturezas: resumo, resumo expandido, publicação completa ou não especificado. Ainda, os livros podem ser tanto os publicados quanto os organizados, enquanto os capítulos de livro são sempre de livros publicados.
 
-Neste trabalho são consideradas apenas publicações completas em periódicos, publicações completas em eventos, livros publicados e capítulos de livros publicados, as quais são referenciadas como publicações científicas. Foram extraídas $9.968.877$ publicações científicas dos $314.403$ currículos avaliados, e caso todas as naturezas fossem consideradas esse número chegaria a $17.526.806$, como mostra a \autoref{tab:publicacoescientificas}.
+Neste trabalho são consideradas apenas as publicações completas em periódicos, publicações completas em eventos, livros publicados e capítulos de livros publicados, os quais são referenciados como publicações científicas. Foram extraídas $9.968.877$ publicações científicas dos $314.403$ currículos avaliados, e caso todas as naturezas fossem consideradas esse número chegaria a $17.526.806$, como mostra a \autoref{tab:publicacoescientificas}.
 
 \begin{table}[htpb]
     \centering
@@ -68,15 +67,15 @@ Neste trabalho são consideradas apenas publicações completas em periódicos, 
     \end{tabular}
 \end{table}
 
-Depois do título, o ano de publicação é o campo mais importante para o método desenvolvido. Por isso, é importante que esteja corretamente preenchido. No conjunto das publicações científicas são apenas $914$ casos onde o campo está sem valor válido, o que representa menos de $0,0001$\% dos casos.
+Depois do título, o ano de publicação é o campo mais importante para o método desenvolvido, e por isso é importante que esteja corretamente preenchido. No conjunto das publicações científicas são apenas $914$ casos onde o campo não tem valor válido, o que representa menos de $0,01$\% dos casos.
 
-O número de autores, isto é, pesquisadores que escreveram alguma publicação científica, é de $290.927$, de um total de $314.403$ pesquisadores. Desses, $238.585$ escreveram publicações em coautoria, o que significa que a vasta maioria dos autores também é realiza coautor. O número de coautores que colaboraram com pesquisadores de outras áreas é de $199.357$, o que reforça a ideia de que a ciência é colaborativa.
+O número de autores, isto é, pesquisadores que escreveram alguma publicação científica, é de $290.927$, de um total de $314.403$ pesquisadores. Desses, $238.585$ escreveram publicações em coautoria, o que significa que a vasta maioria dos autores também é coautor de publicações. O número de coautores que colaboraram com pesquisadores de outras áreas é de $199.357$, o que reforça a ideia de que a ciência é colaborativa.
 
-São $288.730$ os pesquisadores que cadastraram suas áreas de atuação além da grande área do conhecimento. A maioria declara que atua em apenas uma área do conhecimento, como mostra o gráfico da \autoref{fig:areasdeatuacaodistintas}.
+Por fim, são $288.730$ os pesquisadores que cadastraram suas áreas de atuação. A maioria declara que atua em apenas uma área do conhecimento, como mostra o gráfico da \autoref{fig:areasdeatuacaodistintas} com o número de pesquisadores pelo número de áreas distintas nas quais atua.
 
 \begin{figure}[htpb]
   \centering
   \includegraphics[width=.8\textwidth]{figuras/conjuntodedados-numero-de-areas-distintas}
-  \caption{Histograma do número de pesquisadores pelo número de áreas de atuação distintas.}
+  \caption{Frequência do número de pesquisadores pelo número de áreas de atuação distintas.}
   \label{fig:areasdeatuacaodistintas}
 \end{figure}
