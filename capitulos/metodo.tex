@@ -32,7 +32,7 @@ Os procedimentos para normalização do título das publicações e identificaç
 
 \subsection{Normalização do título das publicações}
 
-Diversas produções científicas nessa área \cite{franceschet2011collaboration} \cite{mena2013prospecccao} \cite{reuther2006managing} descrevem casos onde uma publicação têm diversos nomes (sinônimos) e casos onde diferentes publicações possuem o mesmo nome (homônimos), cujos requerem tratamento a fim de obter um resultado mais confiável na etapa seguinte.
+Diversas produções científicas nessa área \cite{franceschet2011collaboration, mena2013prospecccao, reuther2006managing} descrevem casos onde uma publicação têm diversos nomes (sinônimos) e casos onde diferentes publicações possuem o mesmo nome (homônimos), cujos requerem tratamento a fim de obter um resultado mais confiável na etapa seguinte.
 
 Publicações sinônimas acontecem neste trabalho porque os coautores não cadastraram o título da publicação exatamente da mesma maneira. Existem casos onde há abreviação de palavras, omissão de pontuação ou erros de digitação, por exemplo. Ainda, foram encontrados casos onde existem metadados para formatação do título, como itálico e negrito, que são colocados por alguns desses coautores.
 
@@ -154,12 +154,12 @@ O \autoref{alg:coautoria} foi proposto para construir a lista de adjacência ide
 
 Assim, em um conjunto de publicações do mesmo tipo e ano, podem ser identificas como coautorias as publicações com títulos que são, por exemplo, pelo menos $90$\% similares, pertencem a autores diferentes e os títulos contêm pelo menos duas palavras. O cálculo da similaridade é feito a partir da distância de Levenshtein \cite{levenshtein1965binary}, que quantifica a dissimilaridade entre os títulos. A transformação das componentes conexas em cliques no final do procedimento garante que todos os coautores estejam relacionados entre si.
 
-Em consequência disso, o número de coautorias identificadas aumenta consideravelmente. O gráfico da \autoref{fig:composicaocoautorias} mostra a composição das coautorias identificadas em termos da similaridade, indicando que quase $1/4$ das coautorias foram identificas pelo procedimento aplicado. Os casos de coautorias identificadas pela transformação das componentes conexas em cliques não estão retratadas no gráfico, mas somam $164.876$ coautorias identificadas.
+Em consequência disso, o número de coautorias identificadas aumenta consideravelmente. O gráfico da \autoref{fig:composicaocoautorias} mostra a composição das coautorias identificadas em termos da similaridade quando os títulos podem ser 90\% similares, indicando que quase $1/4$ das coautorias foram identificas pelo procedimento aplicado. Os casos de coautorias identificadas pela transformação das componentes conexas em cliques não estão retratadas no gráfico, mas somam $164.876$ coautorias que não seriam identificadas.
 
 \begin{figure}[htpb]
   \centering
   \includegraphics[scale=.5]{figuras/metodo-composicao-coautorias}
-  \caption{Composição das coautorias identificadas em termos da similaridade.}
+  \caption{Composição das coautorias identificadas em termos da similaridade quando os títulos podem ser 90\% similares.}
   \label{fig:composicaocoautorias}
 \end{figure}
 
@@ -175,4 +175,4 @@ Esse mapa de calor possibilitou gerar uma matriz de adjacência bastante interes
 
 Foram utilizados gráficos de segmento, histogramas, mapas de calor, tabelas, grafos e dígrafos para ler e visualizar os resultados. Uma vez que existiam dados faltantes, foi realizada a análise condicional. Ainda, o resultado de outros artigos foram avaliados para verificar o que era observado.
 
-Ao avaliar resultados, as etapas anteriores foram revisitadas com o intuito de aprimorar o tratamento dos dados. As etapas de seleção, pré-processamento, e mineração de dados foram revisitadas múltiplas vezes. O mapa gerado na etapa de mineração, por exemplo, foi gerado apenas nas últimas iterações.
+Ao avaliar resultados, as etapas anteriores foram revisitadas com o intuito de aprimorar o tratamento dos dados. As etapas de seleção, pré-processamento e mineração de dados foram revisitadas múltiplas vezes. O mapa gerado na etapa de mineração, por exemplo, foi gerado apenas nas últimas iterações.

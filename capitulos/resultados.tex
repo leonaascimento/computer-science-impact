@@ -1,6 +1,6 @@
 \chapter{Resultados e Discussão}
 
-Nesta seção apresentamos os resultados obtidos a partir da análise das coautorias, onde são discutidos os resultados relacionados à produção bibliográfica, impacto e colaboração com as demais áreas, além da interdisciplinaridade da Ciência da Computação, comparando-a com as demais áreas e discutindo como suas relações acontecem sob o ponto de vista das coautorias.
+Nesta seção são apresentados os resultados obtidos a partir da análise das redes de coautoria, onde são discutidos os resultados relacionados à produção bibliográfica, impacto e colaboração com as demais áreas, além da interdisciplinaridade da Ciência da Computação, comparando-a com as demais áreas e discutindo como suas relações acontecem sob o ponto de vista das coautorias.
 
 \section{Produção bibliográfica}
 
@@ -11,7 +11,7 @@ O número de publicações científicas únicas feitas em coautoria com pesquisa
     \caption{As 10 áreas que mais produzem publicações científicas em coautoria na ciência brasileira.}
     \label{tab:producaoporarea}
     \begin{tabular}{|r|l|c|}%
-        \hline & Área & Número de publicações\\\hline
+        \hline & \textbf{Área} & \textbf{Número de publicações}\\\hline
         \csvreader[late after line=\\\hline]%
         {"tabelas/resultados-producao-bliografica-por-area.csv"}%
         {area=\area,contagem=\contagem}%
@@ -58,7 +58,7 @@ Uma visualização que permite observar o impacto exercido por cada área é apr
 \begin{figure}[htpb]
   \centering
   \includegraphics[width=1\textwidth]{figuras/resultados-grafo-impacto}
-  \caption{Grafo do impacto exercido pela área do conhecimento na produção científica feita em colaboração das outras áreas. Os nós com cores mais quentes são os que mais exercem impacto em outras áreas.}
+  \caption{Dígrafo do impacto exercido pela área do conhecimento na produção científica feita em colaboração com outras áreas. Os nós com cores mais quentes são os que mais exercem impacto em outras áreas.}
   \label{fig:grafoimpacto}
 \end{figure}
 
@@ -75,7 +75,7 @@ O número de publicações científicas interdisciplinares feitas em coautoria a
     \caption{As 20 áreas com o maior número de publicações interdiscplinares.}
     \label{tab:producaointerdisciplinar}
     \begin{tabular}{|r|l|c|}%
-        \hline & Área & Número de publicações interdisciplinares\\\hline
+        \hline & \textbf{Área} & \textbf{Número de publicações interdisciplinares}\\\hline
         \csvreader[late after line=\\\hline]%
         {"tabelas/resultados-producao-bibliografica-interdisciplinar.csv"}%
         {area=\area,contagem=\contagem}%
@@ -89,10 +89,10 @@ Podemos ver na \autoref{tab:producaogrupointerdisciplinar} que a maioria das pub
 
 \begin{table}[htpb]
     \centering
-    \caption{Número de publicações onde os grupos com pesquisadores Ciência da Computação eram compostos por pesquisadores de outras áreas.}
+    \caption{Número de publicações onde os grupos com pesquisadores da Ciência da Computação também eram compostos por pesquisadores de outras áreas.}
     \label{tab:producaogrupointerdisciplinar}
     \begin{tabular}{|r|r|}%
-        \hline Número áreas diferentes & Contagem de publicações \\\hline
+        \hline \textbf{Número áreas diferentes} & \textbf{Contagem de publicações} \\\hline
         \csvreader[late after line=\\\hline]%
         {"tabelas/resultados-producao-bibliografica-computacao-e-grupos-interdisciplinares.csv"}%
         {tamanhodogrupo=\tamanhodogrupo,contagem=\contagem}%
