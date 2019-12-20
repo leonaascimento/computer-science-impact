@@ -64,11 +64,13 @@ Assim, o \autoref{alg:normalizacao} foi proposto para normalizar o título das p
         \EndIf
     \EndFor
     \State $titulo\gets resultado$
-    \State $titulo\gets \Call{NormalizeParaFormaNFC}{titulo}$
+    \State $titulo\gets \Call{NormalizeParaFormaNFKC}{titulo}$
     \State \Return $titulo$
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
+
+A normalização NFKD usada no método transforma uma cadeia de caracteres para a forma onde os diacríticos estão decompostos. Ainda, caracteres com o mesmo significado semântico são representados de uma única maneira. Com a normalização NFKC executada no final do procedimento, os diacríticos são recombinados usando regras canônicas.
 
 Assume-se que publicações homônimas são mais difíceis de ocorrer dado que as coautorias serão identificadas apenas para publicações de um mesmo tipo em um mesmo ano, e por isso nenhum tratamento foi realizado. Porém, caso publicações homônimas existam nesse conjunto de dados, seria possível observar que a lista de coautores de um autor se dividiria em dois ou mais grupos altamente interconectados, sem colaborações entre os grupos diferentes \cite{franceschet2011collaboration}.
 
@@ -82,21 +84,23 @@ O procedimento descrito pelo \autoref{alg:identificacaoarea} assume que existe u
 \caption{Identificação da área de atuação do pesquisador}
 \label{alg:identificacaoarea}
 \begin{algorithmic}[1]
+\Require{$A$ é o conjunto de áreas de atuação do pesquisador declaradas no currículo}
+\Ensure{Nome da área do conhecimento identificada para o pesquisador}
 \Procedure{IdentificaArea}{A}
     \State $areaSelecionada \gets \textbf{nulo}$
     \State $raiz \gets \Call{NoVazio}$
     \ForAll{$area \in A$}
-        \State $grandeArea \gets \Call{GrandeArea}{area}$
-        \State $area \gets \Call{Area}{area}$
-        \State $no \gets \Call{RecuperaNo}{raiz, grandeArea}$
+        \State $nomeGrandeArea \gets \Call{NomeGrandeArea}{area}$
+        \State $nomeArea \gets \Call{NomeArea}{area}$
+        \State $no \gets \Call{RecuperaNo}{raiz, nomeGrandeArea}$
         \If {$no$ não existe}
-            \State $no \gets \Call{IncluirNo}{raiz, grandeArea}$
+            \State $no \gets \Call{IncluirNo}{raiz, nomeGrandeArea}$
         \EndIf
         \State $no.contagem++$
-        \If{$area$ está preenchida}
-            \State $folha \gets \Call{RecuperaNo}{no, area}$
+        \If{$nomeArea$ está preenchida}
+            \State $folha \gets \Call{RecuperaNo}{no, nomeArea}$
             \If{$folha$ não existe}
-                \State $folha \gets \Call{IncluirNo}{no, area}$
+                \State $folha \gets \Call{IncluirNo}{no, nomeArea}$
             \EndIf
             \State $folha.contagem++$
         \Else
@@ -126,7 +130,9 @@ O \autoref{alg:coautoria} foi proposto para construir a lista de adjacência ide
 \caption{Identificação de coautorias}
 \label{alg:coautoria}
 \begin{algorithmic}[1]
-\Procedure{IdentificaCoautoria}{P, sim}
+\Require{$P$ é o conjunto de publicações de um dado ano e $sim$ a similaridade mínima para aceitar publicações como sendo sinônimas}
+\Ensure{$C$ é a lista de adjacência da coautoria de publicações}
+\Procedure{IdentificaCoautoria}{$P, sim$}
     \State $C\gets \emptyset$
     \For{$i\gets 1 \textbf{ to } |P|$}
         \For{$j\gets i \textbf{ to } |P|$}
@@ -138,7 +144,7 @@ O \autoref{alg:coautoria} foi proposto para construir a lista de adjacência ide
             \State $t_2 \gets P[j].titulo$
             \State $sim_{tam}\gets \dfrac{\min\{|t_1|, |t_2|\}}{\max\{|t_1|, |t_2|\}}$
             \If{$a_1 \neq a_2\textbf{ and } |p_1| \geq 3 \textbf{ and } |p_2| \geq 3 \textbf{ and } sim_{tam} \geq sim$}
-                \State $dist\gets \Call{DistanciaLevenshthein}{p_1, p_2}$
+                \State $dist\gets \Call{DistanciaLevenshtein}{t_1, t_2}$
                 \State $sim_{lev}\gets 1 - \dfrac{dist}{\max\{|t_1|, |t_2|\}}$
                 \If{$sim_{lev} \geq sim$}
                     \State $C\gets C\cup\{(P[i], P[j])\}$
@@ -152,7 +158,7 @@ O \autoref{alg:coautoria} foi proposto para construir a lista de adjacência ide
 \end{algorithmic}
 \end{algorithm}
 
-Assim, em um conjunto de publicações do mesmo tipo e ano, podem ser identificas como coautorias as publicações com títulos que são, por exemplo, pelo menos $90$\% similares, pertencem a autores diferentes e os títulos contêm pelo menos duas palavras. O cálculo da similaridade é feito a partir da distância de Levenshtein \cite{levenshtein1965binary}, que quantifica a dissimilaridade entre os títulos. A transformação das componentes conexas em cliques no final do procedimento garante que todos os coautores estejam relacionados entre si.
+Assim, em um conjunto de publicações do mesmo tipo e ano, podem ser identificadas como coautorias as publicações com títulos que são, por exemplo, pelo menos $90$\% similares, pertencem a autores diferentes e os títulos contêm pelo menos duas palavras. O cálculo da similaridade é feito a partir da distância de Levenshtein \cite{levenshtein1965binary}, que quantifica a dissimilaridade entre os títulos. A transformação das componentes conexas em cliques no final do procedimento garante que todos os coautores estejam relacionados entre si, uma vez que isso garante que para cada publicação todas as coautorias são mútuas.
 
 Em consequência disso, o número de coautorias identificadas aumenta consideravelmente. O gráfico da \autoref{fig:composicaocoautorias} mostra a composição das coautorias identificadas em termos da similaridade quando os títulos podem ser 90\% similares, indicando que quase $1/4$ das coautorias foram identificas pelo procedimento aplicado. Os casos de coautorias identificadas pela transformação das componentes conexas em cliques não estão retratadas no gráfico, mas somam $164.876$ coautorias que não seriam identificadas.
 
