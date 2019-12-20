@@ -137,7 +137,7 @@ O \autoref{alg:coautoria} foi proposto para construir a lista de adjacência ide
             \State $t_1 \gets P[i].titulo$
             \State $t_2 \gets P[j].titulo$
             \State $sim_{tam}\gets \dfrac{\min\{|t_1|, |t_2|\}}{\max\{|t_1|, |t_2|\}}$
-            \If{$a_1 \neq a_2\textbf{ and } |p_1| \geq 3 \textbf{ and } |P_j| \geq 3 \textbf{ and } sim_{tam} \geq sim$}
+            \If{$a_1 \neq a_2\textbf{ and } |p_1| \geq 3 \textbf{ and } |p_2| \geq 3 \textbf{ and } sim_{tam} \geq sim$}
                 \State $dist\gets \Call{DistanciaLevenshthein}{p_1, p_2}$
                 \State $sim_{lev}\gets 1 - \dfrac{dist}{\max\{|t_1|, |t_2|\}}$
                 \If{$sim_{lev} \geq sim$}
